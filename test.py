@@ -1,11 +1,24 @@
 from random import randint
 
+
+def randomize(n, arr_sizes):
+
+    random_size = randint(1, UPPER_BOUND + ADD_BOUND)
+    while random_size in arr_sizes:
+        random_size = randint(1, UPPER_BOUND + ADD_BOUND)
+    
+    arr_sizes.add(random_size)
+    
+    return random_size
+
+
+
+def sort_arr(arr, index):
+
+    return sorted(arr) if index % 2 == 0 else sorted(arr, reverse=True)
+
+
 def solve(n):
-
-    UPPER_BOUND = n
-    LOWER_BOUND = -UPPER_BOUND
-    ADD_BOUND = 10
-
 
     arrays = list()
     arr_sizes = set()
@@ -15,26 +28,25 @@ def solve(n):
 
         new_arr = list()
 
-        random_size = randint(1, UPPER_BOUND + ADD_BOUND)
-        while random_size in arr_sizes:
-            random_size = randint(1, UPPER_BOUND + ADD_BOUND)
+        random_size = randomize(n, arr_sizes)
         
-        arr_sizes.add(random_size)
         for _ in range(random_size):
             new_arr.append(randint(LOWER_BOUND, UPPER_BOUND))
-        
-        if i % 2 == 0:
-            new_arr.sort()
-        else:
-            new_arr.sort(reverse=True)
+
+        new_arr = sort_arr(new_arr, i)
 
         arrays.append(new_arr)
 
     return arrays
 
 
+n = int(input())
 
-solution = solve(int(input()))
+UPPER_BOUND = n
+LOWER_BOUND = -UPPER_BOUND
+ADD_BOUND = 10
+
+solution = solve(n)
 for i in range(len(solution)):
     print(solution[i])
 
